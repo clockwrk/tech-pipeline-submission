@@ -37,6 +37,8 @@ db.sync()
         app.listen(PORT, function() {
  
             console.log('Live at Port 3000');
+            opn('http://localhost:3000');
+
         });
     })
     .catch(function(err) {
