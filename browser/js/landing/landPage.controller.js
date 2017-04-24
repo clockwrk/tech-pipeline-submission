@@ -87,13 +87,13 @@ app.controller('landingController', function ($scope, $window , $timeout) {
 				if(board[0][y]&&board[1][y]&&board[2][y]){
 					return winner();
 				}
-				return false;
 			}
+			return false;
 		},checkDiagnols = function(board){
-				if( board[0][0]&&board[1][1]&&board[2][2]||board[0][2]&&board[1][1]&&board[2][0] ){
-					return winner();
-				}
-				return false;
+			if( board[0][0]&&board[1][1]&&board[2][2]||board[0][2]&&board[1][1]&&board[2][0] ){
+				return winner();
+			}
+			return false;
 		}
 		
 		checkColumns(checkBoard);
