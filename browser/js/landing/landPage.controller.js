@@ -7,8 +7,9 @@ app.controller('landingController', function ($scope, $window , $timeout) {
     	winner = function(){
 				window.alert( $scope.currentPlayer + " has won!!!");
 				window.alert("Ready for the next game!");
-				$route.reload();	
-			}
+				$window.location.reload();	
+			},
+		moves = 0;
 
 	if(whosTurnIsIt){
 		$scope.currentPlayer = 'Player 1';
@@ -57,8 +58,8 @@ app.controller('landingController', function ($scope, $window , $timeout) {
 		for( var x = 0; x <= 2 ; x++ ){
 			for ( var y = 0 ; y <= 2 ; y++ ){
 				checkBoard[x][y] = false;
-				}
 			}
+		}
 
 		var splitting = function(array){
 			return array.id.split("")
@@ -67,11 +68,14 @@ app.controller('landingController', function ($scope, $window , $timeout) {
 		currentBoard.forEach( row => {
 			row.forEach((tile)=>{
 				let positions = splitting(tile);
+
+
 				checkBoard[parseInt(positions[0])][parseInt(positions[1])] = ($scope.currentPlayer===tile.player) && tile.touched;
 			})
 		})
 
 		let checkRows = function(board) {
+			console.log('checkRows', board)
 			for(let x = 0; x <= 2 ; x++){
 				if(board[x][0]&&board[x][1]&&board[x][2]){
 					return winner();
@@ -79,6 +83,7 @@ app.controller('landingController', function ($scope, $window , $timeout) {
 			}
 			return false;
 		},checkColumns = function(board){
+			console.log('checkColumns', board)
 			for(let y = 0; y <= 2 ; y++){
 				if(board[0][y]&&board[1][y]&&board[2][y]){
 					return winner();
@@ -86,35 +91,46 @@ app.controller('landingController', function ($scope, $window , $timeout) {
 				return false;
 			}
 		},checkDiagnols = function(board){
+			console.log('checkDiagnols', board)
 				if( board[0][0]&&board[1][1]&&board[2][2]||board[0][2]&&board[1][1]&&board[2][0] ){
 					return winner();
 				}
 				return false;
 		}
-
+		console.log(checkBoard)
 		checkColumns(checkBoard);
 		checkDiagnols(checkBoard);
 		checkRows(checkBoard);
+
+		if(moves === 9){
+			window.alert("DRAW! Resetting the Board");
+			$window.location.reload()
+		}
 	}
 
 	$scope.clickedBlock = function(event){
 	  let checkStatus = function(blockID){
-	  	let positions = blockID.split("");
+	  let positions = blockID.split("");
 
-	  if ($(event.target).is(':empty')){
-  		if ($scope.currentPlayer==='Player 1') {
-  			$(event.target).html('X');	  			
-  			currentBoard[parseInt(positions[0])] [parseInt(positions[1])].touched = true; 
-  			checkForWinner();
-  			alternatePlayer();
-  		}else{
-  			$(event.target).html('O')
-  			currentBoard[parseInt(positions[0])] [parseInt(positions[1])].touched = true; 
-  			checkForWinner();
-  			alternatePlayer();
-  		}
+		if ($(event.target).is(':empty')){
+	  		if ($scope.currentPlayer==='Player 1') {
+	  			$(event.target).html('X');
+	  			currentBoard[parseInt(positions[0])] [parseInt(positions[1])].player = 'Player 1';	  			
+	  			currentBoard[parseInt(positions[0])] [parseInt(positions[1])].touched = true; 
+	  			checkForWinner();
+	  			alternatePlayer();
+	  		}else{
+	  			$(event.target).html('O')
+	  			currentBoard[parseInt(positions[0])] [parseInt(positions[1])].player = 'Player 2';
+	  			currentBoard[parseInt(positions[0])] [parseInt(positions[1])].touched = true; 
+	  			checkForWinner();
+	  			alternatePlayer();
+	  		}
 		}
 	  }
+	  moves++;
 	  checkStatus($(event.target).attr("data-id"));
+	  
+
 	}
 })

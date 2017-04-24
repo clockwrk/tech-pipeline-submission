@@ -15,7 +15,7 @@ router.use(function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-    console.log('hit the server')
+
     res.sendFile(__dirname + '/public/index.html');
 });
 
