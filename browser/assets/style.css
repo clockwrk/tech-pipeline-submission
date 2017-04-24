@@ -1,0 +1,11 @@
+td {
+border: 1px solid black;
+height: 50px;
+width: 50px;
+}
+
+.tic-tac-toe-block{
+	border-style: solid;
+	min-width: 2em;
+	min-height: 2em;
+}
