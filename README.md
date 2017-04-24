@@ -1,5 +1,6 @@
 # tic-tac-toe
 In a terminal
-  1. run git clone https://github.com/clockwrk/tech-pipeline-submission.git
-  2. change directory into tech-pipeline-submission folder
-  3. run node app
+  1. git clone https://github.com/clockwrk/tech-pipeline-submission.git
+  2. cd tech-pipeline-submission/
+  3. npm install
+  4. node app
